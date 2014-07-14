@@ -1,2 +1,5 @@
+.idea
 *.pyc
 .DS_Store
+*.sqlite3
+*.sqlite

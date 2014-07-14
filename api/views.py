@@ -1,11 +1,17 @@
-import datetime
 import json
+
 from django.http import HttpResponse
 
-from api.utils import Utils
+from .models import Post, PostSerializer
+from .utils import Utils
 
 
 def home(request, *args, **kwargs):
+    serializer = PostSerializer(Post.objects.all(), many=True)
+    return HttpResponse(json.dumps(serializer.data), content_type="application/json")
+
+
+def get_latest(request):
     utils = Utils()
-    posts = utils.get_posts()
-    return HttpResponse(json.dumps(posts), content_type="application/json")
+    utils.scrap_hn()
+    return HttpResponse("Posts retrieved.")
